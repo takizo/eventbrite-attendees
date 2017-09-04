@@ -14,10 +14,15 @@ $jj = 0;
 
 foreach($response['attendees'] as $att)
 {
-	$attList[$jj]['fullname'] = $att['profile']['first_name'].' '.$att['profile']['last_name'];
-	$attList[$jj]['company'] = $att['profile']['company'];
-	$attList[$jj]['jobTitle'] = $att['profile']['job_title'];
-	$jj++;
+	$fullname = $att['profile']['first_name'].' '.$att['profile']['last_name'];
+
+        if(!in_array($fullname, $WHITELIST))
+        {
+                $attList[$jj]['fullname'] = $fullname;
+                $attList[$jj]['company'] = $att['profile']['company'];
+                $attList[$jj]['jobTitle'] = $att['profile']['job_title'];
+                $jj++;
+        }
 }
 
 $attList = json_encode($attList);
